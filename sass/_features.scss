@@ -1,0 +1,42 @@
+.features {
+  grid-column: center-start / center-end;
+
+  margin: 15rem 0;
+
+  display: grid;
+  // grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(25rem, 1fr)
+  ); // css will add the tracks based on the width which ranges from 25rem to 1fr
+  // 🔴 since the minimum widhth has to be 25rem, if the width available for multiple columns is less than that required then it would create new rows to give the minimum width of 25rem
+  // grid-template-rows: auto auto; // not necessary (automatically defined)
+  grid-gap: 6rem;
+  align-items: start;
+}
+
+.feature {
+  display: grid;
+  grid-template-columns: min-content 1fr; // for the icon and the content
+  grid-row-gap: 1.5rem;
+  grid-column-gap: 2.5rem;
+  padding: 1.8rem;
+
+  &__icon {
+    fill: $color-primary;
+    width: 4.5rem;
+    height: 4.5rem;
+    // grid-row: 1 / -1; // -1 means the last of the explicit grid which we haven't defined yet
+    grid-row: 1 / span 2;
+    transform: translateY(-1rem);
+  }
+
+  &__text {
+    font-size: 1.7rem;
+  }
+  transition: all 0.2s;
+  &:hover {
+    background-color: rgb(224, 223, 223);
+    cursor: pointer;
+  }
+}

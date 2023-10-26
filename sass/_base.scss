@@ -1,0 +1,217 @@
+// COLOR VARIABLES
+$color-primary: #c69963;
+$color-primary-dark: #b28451;
+
+$color-secondary: #101d2c;
+
+$color-grey-light-1: #f9f7f6;
+$color-grey-light-2: #aaa;
+
+$color-grey-dark-1: #54483a;
+$color-grey-dark-2: #6d5d4b;
+
+// FONT VARIABLES
+$font-primary: "Nunito", sans-serif;
+$font-display: "Josefin Sans", sans-serif;
+
+// breakpoint variables for media queries
+$bp-largest: 75em; // (1200/16 = 75) use em for media queries breakpoints
+$bp-large: 62.5em; // 1000px
+$bp-medium: 50em; // 800px
+$bp-small: 37.5em; // 600px
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%; // 1rem = 10px
+
+  @media only screen and (max-width: $bp-largest) {
+    font-size: 50%;
+  }
+}
+body {
+  font-family: $font-primary;
+  color: $color-grey-dark-2;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+.container {
+  //overall grid container
+  display: grid;
+  grid-template-rows: 80vh min-content 40vw repeat(3, min-content); // defining the height pf all the rows
+  //🔴 web design system usually use a 12 or 16 column grid design
+  // starting with 8 column layout
+  grid-template-columns:
+    [sidebar-start] 8rem [sidebar-end full-start] minmax(6rem, 1fr)
+    [center-start] repeat(8, [col-start] minmax(min-content, 14rem) [col-end])
+    [center-end] minmax(6rem, 1fr) [full-end];
+  // 8 rem is for the side bar and the rest are responsive
+  // 1fr 1fr are the extra columns we added on both sides of the 8 col grid layout to center these 8 cols in the middle of the page while the sides remain empty
+  // the sides would be occupied in the other sections
+
+  // shortCut for the above
+  // grid-template: row definitions / column definitions
+
+  @media only screen and (max-width: $bp-large) {
+    font-size: 50%;
+
+    // WE HAVE TO ADD A NEW ROW AND REMOVE THE FIRST COLUMN
+    grid-template-rows: 6rem 80vh min-content 40vw repeat(3, min-content); // defining the height pf all the rows
+
+    grid-template-columns:
+      [ full-start] minmax(6rem, 1fr)
+      [center-start] repeat(8, [col-start] minmax(min-content, 14rem) [col-end])
+      [center-end] minmax(6rem, 1fr) [full-end];
+  }
+
+  @media only screen and (max-width: $bp-medium) {
+    // adding a row for the realors to be below the header
+    grid-template-rows: 6rem calc(100vh - 6rem); //rest would be sized according to the content
+  }
+}
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 100;
+  transition: all 0.5s;
+}
+// .modal {
+//   position: fixed;
+//   z-index: 1000;
+//   background-color: #fff;
+// }
+.modal {
+  // display: flex;
+  // align-items: center;
+  // justify-content: flex-start;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  // max-width: 80rem;
+  width: 50%;
+  background-color: #f3f3f3;
+  // padding: 5rem 6rem;
+  box-shadow: 0 4rem 6rem rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  transition: all 0.5s;
+  height: 40rem;
+
+  display: flex;
+
+  background-image: linear-gradient(
+      105deg,
+      rgba(255, 255, 255, 0.9) 0%,
+      rgba(255, 255, 255, 0.9) 50%,
+      transparent 50%
+    ),
+    url(../img/house-1.jpeg);
+  background-size: 100%;
+  background-position: center;
+
+  @media only screen and (max-width: $bp-medium) {
+    background-image: linear-gradient(
+        105deg,
+        rgba(255, 255, 255, 0.9) 0%,
+        rgba(255, 255, 255, 0.9) 70%,
+        transparent 50%
+      ),
+      url(../img/house-1.jpeg);
+  }
+
+  @media only screen and (max-width: $bp-small) {
+    background-image: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.9) 0%,
+        rgba(255, 255, 255, 0.9) 100%
+      ),
+      url(../img/house-1.jpeg);
+  }
+
+  // @media only screen and (max-width: $bp-small) {
+  //   padding: 1rem;
+  // }
+
+  &__img {
+    // background-image: url(../img/house-1.jpeg);
+    background-size: cover;
+    background-position: center;
+    justify-self: flex-end;
+    height: 100%;
+    width: 60%;
+    // background-color: orangered;
+
+    @media only screen and (max-width: $bp-small) {
+      display: none;
+    }
+  }
+  &__form {
+    padding: 2rem;
+    width: 40%;
+    margin-top: 2rem;
+    margin-left: 3rem;
+
+    @media only screen and (max-width: $bp-medium) {
+      width: 100%;
+    }
+    @media only screen and (max-width: $bp-small) {
+      width: 100%;
+      // margin-right: 3rem;
+      margin: 0;
+    }
+
+    &-input {
+      margin-bottom: 2rem;
+      font-size: 1.3rem;
+      font-weight: bold;
+      font-family: inherit; //input elements do not inherit the font family
+      color: inherit;
+      padding: 1rem 2rem;
+      border-radius: 3px;
+      background-color: rgba(#fff, $alpha: 0.5);
+      // border: 1px solid $color-secondary;
+      border: none;
+      outline: none;
+      border-bottom: 2px solid $color-secondary;
+      width: 100%;
+      display: block;
+      transition: 0.3s;
+      &:focus {
+        outline: 0.5px solid $color-secondary;
+        box-shadow: 0 1rem 2rem rgba($color: #000000, $alpha: 0.1);
+        border-bottom: 3px solid $color-secondary;
+      }
+
+      &:focus:invalid {
+        border-bottom: 3px solid red;
+      }
+
+      &::-webkit-input-placeholder {
+        color: $color-grey-dark-2;
+      }
+    }
+
+    &-label {
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-left: 2rem;
+      margin-top: 0.7rem;
+      display: block;
+      transition: all 0.3s;
+    }
+  }
+}
